@@ -63,29 +63,50 @@
         let oInput = document.querySelector('.todo-header input')
             // console.log(oInput);
         oInput.onkeydown = (e) => {
-            let str = oInput.value.trim()
-            if (e.keyCode === 13) {
-                if (!str) {
-                    alert('非法字符')
-                    return
-                }
-                //动态添加li标签
-                let newLi = document.createElement('li')
-                newLi.innerHTML = `<label>
+                let str = oInput.value.trim()
+                if (e.keyCode === 13) {
+                    if (!str) {
+                        alert('非法字符')
+                        return
+                    }
+                    //动态添加li标签
+                    let newLi = document.createElement('li')
+                    newLi.innerHTML = `<label>
                 <input type="checkbox" />
                 <span>` + str + `</span>
                 </label>
                 <button class="btn btn-danger">删除</button>`
-                    //获取ul
-                let oUl = document.querySelector('.todo-main')
-                oUl.appendChild(newLi)
-                oInput.value = ''
+                        //获取ul
+                    let oUl = document.querySelector('.todo-main')
+                    oUl.appendChild(newLi)
+                    oInput.value = ''
+                }
             }
-            // alert('非法字符')
+            /*
+             *给所有的li里面的按键绑定点击事件
+             *
+             *
+             */
+        oUl = document.querySelector('.todo-main')
+        let oLi = oUl.querySelectorAll('li')
+        oLi.forEach((item, index) => {
 
 
 
-        }
+                item.onclick = function(e) {
+                    let oBtn = this.querySelector('.btn')
+
+
+                    // console.log(e.target);
+                    if (e.target === oBtn) {
+
+
+                    }
+
+
+                }
+            })
+            //有一个隐藏属性checked 默认值为false未选中状态
     </script>
 </body>
 
