@@ -16,7 +16,7 @@
                     <input type="text" placeholder="请输入你的任务名称，按回车键确认" />
                 </div>
                 <ul class="todo-main">
-                    <li>
+                    <!-- <li>
                         <label>
                 <input type="checkbox" />
                 <span>xxxxx</span>
@@ -29,7 +29,7 @@
                 <span>yyyy</span>
               </label>
                         <button class="btn btn-danger">删除</button>
-                    </li>
+                    </li> -->
                 </ul>
                 <div class="todo-footer">
                     <label>
@@ -41,6 +41,52 @@
             </div>
         </div>
     </div>
+    <script>
+        //获取ul标签
+        let oUl = document.querySelector('.todo-main')
+            // console.log(oUl);
+        oUl.innerHTML = `  <li>
+                        <label>
+                <input type="checkbox" />
+                <span>xxxxx</span>
+              </label>
+                        <button class="btn btn-danger">删除</button>
+                    </li>
+                    <li>
+                        <label>
+                <input type="checkbox" />
+                <span>yyyy</span>
+              </label>
+                        <button class="btn btn-danger">删除</button>
+                    </li>`
+            //获取输入框对象
+        let oInput = document.querySelector('.todo-header input')
+            // console.log(oInput);
+        oInput.onkeydown = (e) => {
+            let str = oInput.value.trim()
+            if (e.keyCode === 13) {
+                if (!str) {
+                    alert('非法字符')
+                    return
+                }
+                //动态添加li标签
+                let newLi = document.createElement('li')
+                newLi.innerHTML = `<label>
+                <input type="checkbox" />
+                <span>` + str + `</span>
+                </label>
+                <button class="btn btn-danger">删除</button>`
+                    //获取ul
+                let oUl = document.querySelector('.todo-main')
+                oUl.appendChild(newLi)
+                oInput.value = ''
+            }
+            // alert('非法字符')
+
+
+
+        }
+    </script>
 </body>
 
 </html>
