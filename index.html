@@ -63,50 +63,80 @@
         let oInput = document.querySelector('.todo-header input')
             // console.log(oInput);
         oInput.onkeydown = (e) => {
-                let str = oInput.value.trim()
-                if (e.keyCode === 13) {
-                    if (!str) {
-                        alert('非法字符')
-                        return
-                    }
-                    //动态添加li标签
-                    let newLi = document.createElement('li')
-                    newLi.innerHTML = `<label>
+            let str = oInput.value.trim()
+            if (e.keyCode === 13) {
+                if (!str) {
+                    alert('非法字符')
+                    return
+                }
+                //动态添加li标签
+                let newLi = document.createElement('li')
+                newLi.innerHTML = `<label>
                 <input type="checkbox" />
                 <span>` + str + `</span>
                 </label>
                 <button class="btn btn-danger">删除</button>`
-                        //获取ul
-                    let oUl = document.querySelector('.todo-main')
-                    oUl.appendChild(newLi)
-                    oInput.value = ''
-                }
+                    //获取ul
+                let oUl = document.querySelector('.todo-main')
+                oUl.appendChild(newLi)
+                oInput.value = ''
             }
+            removeLi()
+        }
+
+        function removeLi() {
             /*
              *给所有的li里面的按键绑定点击事件
              *
              *
              */
-        oUl = document.querySelector('.todo-main')
-        let oLi = oUl.querySelectorAll('li')
-        oLi.forEach((item, index) => {
+            let oUl = document.querySelector('.todo-main')
+            let oLi = oUl.querySelectorAll('li')
 
 
-
+            oLi.forEach((item, index) => {
                 item.onclick = function(e) {
-                    let oBtn = this.querySelector('.btn')
 
-
-                    // console.log(e.target);
-                    if (e.target === oBtn) {
-
-
+                    let oBtn = this.querySelector('.btn') //变量的不清晰
+                        //有一个隐藏属性checked 默认值为false未选中状态
+                    let oInput = this.querySelector('input')
+                    if (e.target === oBtn && oInput.checked === true) {
+                        //删除li
+                        oBtn.parentNode.remove()
                     }
-
-
                 }
+
             })
-            //有一个隐藏属性checked 默认值为false未选中状态
+        }
+        removeLi()
+
+        function oAllchecked() { //重新获取
+            let oAllinput = document.querySelector('.todo-footer input')
+            let oAllchecked = document.querySelectorAll('.todo-main li input')
+            oAllinput.onclick = () => {
+                //不可以是·=赋值操作·，下去就会直接赋值卡死
+                if (oAllinput.checked === true) {
+                    oAllchecked.forEach((item) => {
+                        item.checked = true
+                    })
+                }
+                if (oAllinput.checked === false) {
+                    oAllchecked.forEach((item) => {
+                        item.checked = false
+                    })
+                }
+            }
+        }
+        oAllchecked()
+
+        /*
+         *单个全选
+         *
+         *
+         */
+        function everyChecked() {
+
+        }
     </script>
 </body>
 
