@@ -81,7 +81,10 @@
                 oUl.appendChild(newLi)
                 oInput.value = ''
             }
+            oText()
+            clearTask()
             removeLi()
+            oAllchecked()
         }
 
         function removeLi() {
@@ -104,9 +107,12 @@
                         //删除li
                         oBtn.parentNode.remove()
                     }
+                    everyChecked()
+                    oText()
                 }
 
             })
+            everyChecked()
         }
         removeLi()
 
@@ -125,6 +131,8 @@
                         item.checked = false
                     })
                 }
+                clearTask()
+                oText()
             }
         }
         oAllchecked()
@@ -134,9 +142,78 @@
          *
          *
          */
+        everyChecked()
+
         function everyChecked() {
+            let oAllchecked = document.querySelectorAll('.todo-main li input')
+
+            let oAllinput = document.querySelector('.todo-footer input')
+            let oAllcheckedArray = Array.from(oAllchecked)
+                //通过数组方法进行筛选条件
+            let result = oAllcheckedArray.every(function(item, index) {
+                return item.checked === true
+            })
+            if (result) {
+                oAllinput.checked = true
+            } else {
+                oAllinput.checked = false
+
+            }
+            oText()
+        }
+
+
+        /*
+         *清除已完成任务
+         *
+         *
+         */
+        function clearTask() {
+            let oclearTask = document.querySelector('.todo-footer .btn')
+            oclearTask.onclick = () => {
+                //获取选中的
+                let oAllchecked = document.querySelectorAll('.todo-main li input')
+                oAllchecked.forEach((item) => {
+
+
+                    if (item.checked === true) {
+                        item.parentNode.parentNode.remove()
+                    }
+
+                })
+
+                //重新获取，判断li是否有 如果没有则把全选盒子取消
+                oAllchecked = document.querySelectorAll('.todo-main li input')
+                    // console.log(oAllchecked.length);
+                if (!oAllchecked.length) {
+                    let oAllinput = document.querySelector('.todo-footer input')
+                    oAllinput.checked = false
+                        // alert('giaogiaogiao')
+                }
+                oText()
+            }
 
         }
+        clearTask()
+
+        /*
+         *获取标签并且改变内容
+         *
+         *
+         */
+        function oText() {
+            let oFinishfTex = document.querySelector('.todo-footer>span :first-child')
+            let oAllTex = document.querySelector('.todo-footer>span')
+            let oAllchecked = document.querySelectorAll('.todo-main li input')
+            let count = 0
+            oAllchecked.forEach((item) => {
+                if (item.checked) {
+                    count++
+                }
+            })
+            oAllTex.textContent = ' 已完成' + count + ' / 全部' + oAllchecked.length
+        }
+        oText()
     </script>
 </body>
 
