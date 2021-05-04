@@ -16,20 +16,7 @@
                     <input type="text" placeholder="请输入你的任务名称，按回车键确认" />
                 </div>
                 <ul class="todo-main">
-                    <!-- <li>
-                        <label>
-                <input type="checkbox" />
-                <span>xxxxx</span>
-              </label>
-                        <button class="btn btn-danger">删除</button>
-                    </li>
-                    <li>
-                        <label>
-                <input type="checkbox" />
-                <span>yyyy</span>
-              </label>
-                        <button class="btn btn-danger">删除</button>
-                    </li> -->
+
                 </ul>
                 <div class="todo-footer">
                     <label>
@@ -44,7 +31,8 @@
     <script>
         //获取ul标签
         let oUl = document.querySelector('.todo-main')
-            // console.log(oUl);
+        let flag = false;
+        // console.log(oUl);
         oUl.innerHTML = `  <li>
                         <label>
                 <input type="checkbox" />
@@ -63,7 +51,8 @@
         let oInput = document.querySelector('.todo-header input')
             // console.log(oInput);
         oInput.onkeydown = (e) => {
-            let str = oInput.value.trim()
+            let str = oInput.value.trim();
+            // !flag;
             if (e.keyCode === 13) {
                 if (!str) {
                     alert('非法字符')
@@ -107,12 +96,14 @@
                         //删除li
                         oBtn.parentNode.remove()
                     }
+                    allfinish()
                     everyChecked()
                     oText()
                 }
 
             })
             everyChecked()
+
         }
         removeLi()
 
@@ -191,6 +182,7 @@
                         // alert('giaogiaogiao')
                 }
                 oText()
+                allfinish()
             }
 
         }
@@ -202,7 +194,6 @@
          *
          */
         function oText() {
-            let oFinishfTex = document.querySelector('.todo-footer>span :first-child')
             let oAllTex = document.querySelector('.todo-footer>span')
             let oAllchecked = document.querySelectorAll('.todo-main li input')
             let count = 0
@@ -214,6 +205,28 @@
             oAllTex.textContent = ' 已完成' + count + ' / 全部' + oAllchecked.length
         }
         oText()
+
+        function allfinish() {
+            let oTodomain = document.getElementsByClassName('todo-main')[0]
+            let oTodofooter = document.getElementsByClassName('todo-footer')[0]
+            let oLi = oTodomain.getElementsByTagName('li')
+            let oInput = document.querySelector('.todo-header input')
+            if (flag) {
+                return
+            }
+            if (oLi.length === 0) {
+                oTodomain.style.display = 'none'
+                oTodofooter.style.display = 'none'
+                let otodowrap = document.getElementsByClassName('todo-wrap')[0]
+                let newDiv = document.createElement('div')
+                newDiv.innerText = '今天任务已完成'
+                newDiv.style.textAlign = 'center'
+                newDiv.style.color = 'red'
+                otodowrap.appendChild(newDiv)
+            }
+
+
+        }
     </script>
 </body>
 
